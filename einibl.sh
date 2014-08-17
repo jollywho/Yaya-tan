@@ -1,3 +1,4 @@
+# escape if no arguments given
 if [[ -z $@ ]]; then
   exit
 fi
@@ -7,30 +8,56 @@ yellow='\\e[0;33m'
 cyan='\\e[0;36m'
 green='\\e[1;32m'
 NC='\\e[0m'
+
 str=$@
+
+# translate spaces to '+' in search string
 m=${str// /+}
 
+# scrape search page
 url=$(wget -q -O- http://nibl.co.uk/bots.php?search=$m | sed 's/<td class="\(botname\|packnumber\|filesize\|filename\)">/<td class="\1">\n/g')
+
+# set xpath and attributes to extract
 bot="/html/body/div/div/div/table/tr/td[@class = 'botname']/text()"
 pack="/html/body/div/div/div/table/tr/td[@class = 'packnumber']/text()"
 size="/html/body/div/div/div/table/tr/td[@class = 'filesize']/text()"
 name="/html/body/div/div/div/table/tr/td[@class = 'filename']/text()"
 
-echo -e "$url" | xmllint --html --xpath "$bot" --format - | sed '/^\s*$/d' | sed 's/^/'"${yellow}"'/' | sed 's/\s*$/'"${NC}"'/' > a
-echo -e "$url" | xmllint --html --xpath "$pack" --format - | sed '/^\s*$/d' | sed 's/^/'"${cyan}"'/' | sed 's/$/'"${NC}"'/' > b
-echo -e "$url" | xmllint --html --xpath "$size" --format - | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > c
-echo -e "$url" | xmllint --html --xpath "$name" --format - | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > d
+# extract pack details and surround with escape colors
+echo -e "$url" | xmllint --html --xpath "$bot" --format - \
+  | sed '/^\s*$/d' | sed 's/^/'"${yellow}"'/' | sed 's/\s*$/'"${NC}"'/' > a
+echo -e "$url" | xmllint --html --xpath "$pack" --format - \
+  | sed '/^\s*$/d' | sed 's/^/'"${cyan}"'/' | sed 's/$/'"${NC}"'/' > b
+echo -e "$url" | xmllint --html --xpath "$size" --format - \
+  | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > c
+echo -e "$url" | xmllint --html --xpath "$name" --format - \
+  | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > d
 o=$(paste -d ";" a b c d)
 rm a b c d
 
+# show contents with line numbers
 echo -e "$o" | less -N
 read item
 
-msg=$(echo -e "$o" | sed -n "${item}p")
+# e.g. 0 2 5 -> 0p;2p;5p
+# e.g. 1-5 -> 1,5p
+item=$(echo "$item" | sed -e 's/\([0-9]*\)-\([0-9]*\)/\1,\2p/g' \
+  | sed -e 's/\([0-9^,p]*\)/\1p;/g' | sed -e 's/pp/p/g')
+
+msg=$(echo -e "$o" | sed -n "${item}")
 clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g')
-bot=$(echo -e "$clip" | cut -d ';' -f1)
-pack=$(echo -e "$clip" | cut -d ';' -f2)
-clip="/msg ${bot} xdcc send #${pack}"
+
+PACKS=()
+for str in "$clip"
+do
+  echo "$str"
+  bot=$(echo -e "$str" | cut -d ';' -f1)
+  PACKS+=$(echo -e "$str" | cut -d ';' -f2)
+done
+
+pack=$PACKS | tr ' ' ','
+
+clip="/msg ${bot} xdcc batch ${pack}"
 
 echo -e "$clip"
 echo $clip | xclip
