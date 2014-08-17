@@ -47,17 +47,17 @@ item=$(echo "$item" | sed -e 's/\([0-9]*\)-\([0-9]*\)/\1,\2p/g' \
 msg=$(echo -e "$o" | sed -n "${item}")
 clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g')
 
+# iterate batch selection and combine pack #s
 PACKS=()
 for str in "$clip"
 do
   echo "$str"
-  bot=$(echo -e "$str" | cut -d ';' -f1)
   PACKS+=$(echo -e "$str" | cut -d ';' -f2)
 done
+botname=$(echo "$str" | head -1 | cut -d ';' -f1)
+pack=$(echo $PACKS | tr ' ' ',')
 
-pack=$PACKS | tr ' ' ','
-
-clip="/msg ${bot} xdcc batch ${pack}"
+clip="/msg ${botname} xdcc batch ${pack}"
 
 echo -e "$clip"
 echo $clip | xclip
