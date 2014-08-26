@@ -13,6 +13,10 @@ str=$@
 
 # translate spaces to '+' in search string
 m=${str// /+}
+a=$(mktemp)
+b=$(mktemp)
+c=$(mktemp)
+d=$(mktemp)
 
 # scrape search page
 url=$(wget -q -O- http://nibl.co.uk/bots.php?search=$m \
@@ -26,15 +30,15 @@ name="/html/body/div/div/div/table/tr/td[@class = 'filename']/text()"
 
 # extract pack details and surround with escape colors
 echo -e "$url" | xmllint --html --xpath "$bot" --format - \
-  | sed '/^\s*$/d' | sed 's/^/'"${yellow}"'/' | sed 's/\s*$/'"${NC}"'/' > a
+  | sed '/^\s*$/d' | sed 's/^/'"${yellow}"'/' | sed 's/\s*$/'"${NC}"'/' > $a
 echo -e "$url" | xmllint --html --xpath "$pack" --format - \
-  | sed '/^\s*$/d' | sed 's/^/'"${cyan}"'/' | sed 's/$/'"${NC}"'/' > b
+  | sed '/^\s*$/d' | sed 's/^/'"${cyan}"'/' | sed 's/$/'"${NC}"'/' > $b
 echo -e "$url" | xmllint --html --xpath "$size" --format - \
-  | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > c
+  | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > $c
 echo -e "$url" | xmllint --html --xpath "$name" --format - \
-  | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > d
+  | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > $d
 o=$(paste -d "@" a b c d)
-rm a b c d
+rm $a $b $c $d
 o=$(echo -e "$o" | sed 's/@/||/g')
 
 # show contents with line numbers
