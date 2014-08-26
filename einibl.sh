@@ -37,7 +37,7 @@ echo -e "$url" | xmllint --html --xpath "$size" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > $c
 echo -e "$url" | xmllint --html --xpath "$name" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > $d
-o=$(paste -d "@" a b c d)
+o=$(paste -d "@" $a $b $c $d)
 rm $a $b $c $d
 o=$(echo -e "$o" | sed 's/@/||/g')
 
