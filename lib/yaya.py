@@ -40,4 +40,4 @@ if __name__ == "__main__":
     server = Yaya_serv()
     while True:
         yaya.run()
-        server.run()
+        #server.run()

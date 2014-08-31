@@ -31,7 +31,6 @@ class Yaya_serv():
     def pipe_command(data):
         return bytes('test', 'UTF-8')
 
-
     def run(self):
         try:
             self.server.serve_forever()

@@ -11,7 +11,7 @@ class Yaya_irc():
     def __init__(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect((server, 6667))
-        msg = "USER " + botnick + " " + botnick + " " + botnick + "\n"
+        msg = "USER " + botnick + " " + botnick + " " + botnick + " :#\n"
         self.s.send(bytes(msg, "UTF-8"))
         msg = "NICK " + botnick + "\n"
         self.s.send(bytes(msg, "UTF-8"))
@@ -35,13 +35,13 @@ class Yaya_irc():
     def run(self):
 
         ircmsg = self.s.recv(2048)
-        ircmsg = ircmsg.strip(bytes('\n\r', "UTF-8"))
+        ircmsg = ircmsg.decode('utf-8').strip('\n\r')
 
-        print(ircmsg)
+        print(ircmsg) if len(ircmsg) > 1 else None
 
-        if ircmsg.find(bytes("#test#", "UTF-8"))!= -1:
+        if ircmsg.find("#test#")!= -1:
             nick = ircmsg.split('!')[0][1:]
-            hello(nick)
+            self.hello(nick)
 
-        if ircmsg.find(bytes("PING :", "UTF-8")) != -1:
+        if ircmsg.find("PING :") != -1:
             ping()
