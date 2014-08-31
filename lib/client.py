@@ -1,13 +1,10 @@
 import socket
-def client(string):
-    HOST, PORT = 'localhost', 2000
-    # SOCK_STREAM == a TCP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #sock.setblocking(0)  # optional non-blocking
-    sock.connect((HOST, PORT))
-    sock.send(string)
-    reply = sock.recv(16384)  # limit reply to 16K
+def client():
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.connect("/tmp/aaa")
+    sock.send(b"test")
+    reply = sock.recv(14)  # limit reply to 16K
     sock.close()
     return reply
 
-print(client(bytes(' ', "UTF-8")))
+print(client().decode('utf-8'))

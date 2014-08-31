@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import socket
-import threading
-import socketserver
 server = "irc.rizon.net"
 channel = "#yayatest"
 botnick = "Yaya-tan"
@@ -34,14 +32,13 @@ class Yaya_irc():
 
     def run(self):
 
-        ircmsg = self.s.recv(2048)
-        ircmsg = ircmsg.decode('utf-8').strip('\n\r')
+        while 1:
+            data = self.s.recv(2048)
+            data = data.decode('utf-8').strip('\n\r')
 
-        print(ircmsg) if len(ircmsg) > 1 else None
+            if data.find("#test#") != -1:
+                nick = data.split('!')[0][1:]
+                self.hello(nick)
 
-        if ircmsg.find("#test#")!= -1:
-            nick = ircmsg.split('!')[0][1:]
-            self.hello(nick)
-
-        if ircmsg.find("PING :") != -1:
-            ping()
+            if data.find("PING :") != -1:
+                ping()

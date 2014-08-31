@@ -1,38 +1,26 @@
 #! /usr/bin/env python
-import socketserver, subprocess, sys, os
-from threading import Thread
-
-HOST = 'localhost'
-PORT = 2000
-
-class SingleTCPHandler(socketserver.BaseRequestHandler):
-    "One instance per connection.  Override handle(self) to customize action."
-    def handle(self):
-        # self.request is the client connection
-        data = self.request.recv(1024)  # clip input at 1Kb
-        reply = pipe_command(data)
-        if reply is not None:
-            self.request.send(reply)
-        self.request.close()
-
-class SimpleServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    # Ctrl-C will cleanly kill all spawned threads
-    daemon_threads = True
-    # much faster rebinding
-    allow_reuse_address = True
-
-    def __init__(self, server_address, RequestHandlerClass):
-        socketserver.TCPServer.__init__(self, server_address, RequestHandlerClass)
+import socket,os
 
 class Yaya_serv():
     def __init__(self):
-        self.server = SimpleServer((HOST, PORT), SingleTCPHandler)
-
-    def pipe_command(data):
-        return bytes('test', 'UTF-8')
+        self.s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            os.remove("/tmp/aaa")
+        except OSError:
+            pass
+        self.s.bind("/tmp/aaa")
+        self.s.listen(1)
 
     def run(self):
-        try:
-            self.server.serve_forever()
-        except KeyboardInterrupt:
-            sys.exit(0)
+
+        while 1:
+            self.c, adrr = self.s.accept()
+            data = self.c.recv(2048)
+            self.c.send(data)
+
+#            if ircmsg.find("#test#")!= -1:
+#                nick = ircmsg.split('!')[0][1:]
+#                self.hello(nick)
+#
+#            if ircmsg.find("PING :") != -1:
+#                ping()
