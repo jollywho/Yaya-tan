@@ -2,8 +2,7 @@ import os,sys,threading
 from yaya_irc import Yaya_irc
 from yaya_serv import Yaya_serv
 
-if __name__ == "__main__":
-
+def daemonize():
     stdin = '/dev/null'
     stdout = '/dev/null'
     stderr = '/dev/null'
@@ -36,6 +35,9 @@ if __name__ == "__main__":
     os.dup2(so.fileno( ), sys.stdout.fileno( ))
     os.dup2(se.fileno( ), sys.stderr.fileno( ))
 
+if __name__ == "__main__":
+
+    daemonize()
     yaya = Yaya_irc()
     server = Yaya_serv()
     v = threading.Thread(target=server.run)
