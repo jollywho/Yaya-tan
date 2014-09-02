@@ -9,17 +9,8 @@ message = " "
 def send_message(server, channel, message):
     msg = " ".join([server, channel, message])
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    try:
-        os.remove("/tmp/aaa")
-    except OSError:
-        pass
-    s.bind("/tmp/aaa")
-    s.listen(1)
-
-    while 1:
-        c, adrr = s.accept()
-        data = c.recv(2048)
-        c.send(bytes(msg, "utf-8"))
+    s.connect("/tmp/aaa")
+    s.send(bytes(msg, "utf-8"))
 
 def main(argv):
     msg = argv

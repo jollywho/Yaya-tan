@@ -16,4 +16,5 @@ class Yaya_serv():
         while 1:
             self.c, adrr = self.s.accept()
             data = self.c.recv(2048)
-            self.c.send(data)
+            print(data)
+            #self.c.send(data)
