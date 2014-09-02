@@ -1,5 +1,11 @@
 import socket
-import os
+import os,sys
+import getopt
+
+server = " "
+channel = " "
+message = " "
+
 def client():
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     try:
@@ -14,8 +20,39 @@ def client():
         data = c.recv(2048)
         c.send(data)
 
-#todo:  getopts
+def main(argv):
+    msg = argv
+    global server
+    global channel
+    global message
+    try:
+        opts, args = getopt.getopt(argv,"hs:c:m:",
+                ["server=","channel=","message="])
+    except getopt.GetoptError:
+        print('test.py -s <server> -c <channel> -m <message>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('test.py [--server=] [--chanel=] [--message=]')
+            sys.exit()
+        elif opt in ("-s", "--server"):
+            server = arg
+            msg.remove("-s")
+            msg.remove(arg)
+        elif opt in ("-c", "--channel"):
+            channel = arg
+            msg.remove("-c")
+            msg.remove(arg)
+        elif opt in ("-m", "--message"):
+            message = arg
+            msg.remove("-m")
+            msg.remove(arg)
+    return msg
 
-#todo:  default serv
-#       default chan
-client()
+if __name__ == "__main__":
+    msg = main(sys.argv[1:])
+    message = ''.join(msg) if message is " " else message
+    print("server: %s" % server)
+    print("channel: %s" % channel)
+    print("message: %s" % message)
+    #send_message(server, channel, message)
