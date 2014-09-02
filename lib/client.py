@@ -6,7 +6,8 @@ server = " "
 channel = " "
 message = " "
 
-def client():
+def send_message(server, channel, message):
+    msg = " ".join([server, channel, message])
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     try:
         os.remove("/tmp/aaa")
@@ -18,7 +19,7 @@ def client():
     while 1:
         c, adrr = s.accept()
         data = c.recv(2048)
-        c.send(data)
+        c.send(bytes(msg, "utf-8"))
 
 def main(argv):
     msg = argv
@@ -55,4 +56,4 @@ if __name__ == "__main__":
     print("server: %s" % server)
     print("channel: %s" % channel)
     print("message: %s" % message)
-    #send_message(server, channel, message)
+    send_message(server, channel, message)
