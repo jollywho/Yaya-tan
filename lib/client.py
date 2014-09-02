@@ -1,10 +1,21 @@
 import socket
+import os
 def client():
-    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    sock.connect("/tmp/aaa")
-    sock.send(b"test")
-    reply = sock.recv(14)  # limit reply to 16K
-    sock.close()
-    return reply
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        os.remove("/tmp/aaa")
+    except OSError:
+        pass
+    s.bind("/tmp/aaa")
+    s.listen(1)
 
-print(client().decode('utf-8'))
+    while 1:
+        c, adrr = s.accept()
+        data = c.recv(2048)
+        c.send(data)
+
+#todo:  getopts
+
+#todo:  default serv
+#       default chan
+client()

@@ -17,10 +17,3 @@ class Yaya_serv():
             self.c, adrr = self.s.accept()
             data = self.c.recv(2048)
             self.c.send(data)
-
-#            if ircmsg.find("#test#")!= -1:
-#                nick = ircmsg.split('!')[0][1:]
-#                self.hello(nick)
-#
-#            if ircmsg.find("PING :") != -1:
-#                ping()

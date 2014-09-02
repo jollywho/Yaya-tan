@@ -36,13 +36,6 @@ class Yaya_irc():
 
     def hello(self, chan, nick):
       self.s.send(bytes("PRIVMSG "+ chan +" :今晩は " + nick + "さま!\n", "UTF-8"))
-    def dcc_request(self, nick):
-      self.s.send(bytes("PRIVMSG " + nick + " :xdcc send 487\n", "UTF-8"))
-
-    def dcc_accept(self, nick, filename, port):
-        print("PRIVMSG " + nick + " :dcc RESUME " + filename + " " + port +" 0\n")
-        self.s.send(bytes("PRIVMSG " + nick + " :xdcc send " + filename + " " + port +"\n", "UTF-8"))
-
     def commands(self, nick, channel, message):
       self.s.send(bytes('PRIVMSG %s :%s お兄ちゃん\n' % (channel, message), "UTF-8"))
 
@@ -64,7 +57,7 @@ class Yaya_irc():
                 ip = data.split(" ")[-3]
                 filename = data.split(" ")[-4]
                 self.dcc_accept(nnn, filename, port)
-                self.dcc = Yaya_dcc(ip,port,size)
+                self.dcc = Yaya_dcc()
                 self.dcc = threading.Thread(target=self.dcc.conn)
                 self.dcc.daemon = True
                 self.dcc.start()
