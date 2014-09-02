@@ -41,6 +41,6 @@ if __name__ == "__main__":
     yaya = Yaya_irc()
     server = Yaya_serv()
     v = threading.Thread(target=server.run)
-    v.ademon = True
+    v.daemon = True
     v.start()
     yaya.run()
