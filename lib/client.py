@@ -44,7 +44,4 @@ def main(argv):
 if __name__ == "__main__":
     msg = main(sys.argv[1:])
     message = ''.join(msg) if message is " " else message
-    print("server: %s" % server)
-    print("channel: %s" % channel)
-    print("message: %s" % message)
     send_message(server, channel, message)
