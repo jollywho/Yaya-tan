@@ -14,7 +14,7 @@ for top in $(ls -d $loc/*); do
       base=$(basename $second)
       match=$(expr match "$base" '.*_\([a-zA-Z]\+\)_')
       if [ "$match" == "" ]; then
-        echo "match"
+        echo "base"
         #python fname_strip.py
       fi
       #mv $second $loc
@@ -22,4 +22,4 @@ for top in $(ls -d $loc/*); do
   done
 done
 
-find $loc -type d -empty -delete
+#find $loc -type d -empty -delete
