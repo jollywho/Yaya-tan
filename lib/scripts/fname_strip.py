@@ -1,7 +1,6 @@
 import sys
 import re
 name = sys.stdin.read()
-print(name)
 ismatch = re.match("(?:\[.*?\])?[_ ]?(.+).*?([_ -][0-9]{1,3}).*(?:\[.*?\])?", name)
 if ismatch != None:
     title = re.match("(.+)[_ -].+", ismatch.groups()[0])

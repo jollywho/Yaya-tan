@@ -9,12 +9,12 @@ loc="/home/chishiki/Movies/test"
 for top in $(ls -d $loc/*); do
   for second in $(ls -d $top/*); do
     if [[ -d $second ]]; then
-      echo $top
-      echo $second
       base=$(basename $second)
       match=$(expr match "$base" '.*_\([a-zA-Z]\+\)_')
       if [ "$match" == "" ]; then
-        echo "base"
+        for file in $(find $top -iname '*.*'); do
+          basename $file | python fname_strip.py
+        done
         #python fname_strip.py
       fi
       #mv $second $loc
