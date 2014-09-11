@@ -8,7 +8,6 @@ strip_audio()
   fi
 }
 
-
 lst=$(pwd)
 if [ $# -gt 1 ]; then
   strip_audio "$1" "$2"
