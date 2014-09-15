@@ -1,13 +1,11 @@
 import sys
 import re
 name = sys.stdin.read()
-ismatch = re.match("(?:\[.*?\])?[_ ]?(.+).*?([_ -][0-9]{1,3}).*(?:\[.*?\])?", name)
+rep = re.sub("\[.*?\]", "", name)
+ismatch = re.match("(.+).*([_ -][0-9]{2,3}[v0-9]?)", rep)
+
 if ismatch != None:
-    title = re.match("(.+)[_ -].+", ismatch.groups()[0])
-    ep = re.match("[_ -]*(.+)[_ -]*", ismatch.groups()[1])
-    if title != None:
-        print(title.groups()[0])
-    else:
-        print(ismatch.groups()[0])
-    if ep != None:
-        print(ep.groups()[0])
+    title = re.sub("[_ -]", "", ismatch.groups()[0])
+    ep = re.sub("[_ -]", "", ismatch.groups()[1])
+    print(title)
+    print(ep)
