@@ -1,4 +1,4 @@
-loc="/home/chishiki/Movies"
+loc="/home/chishiki/xdcc"
 
 #loop on each directory in loc as top
 #loop on each subdirectory as second
