@@ -1,4 +1,4 @@
-loc="/mnt/casper/chishiki/dvds"
+loc="/mnt/casper/chishiki/dvds/Mw5H"
 
 #loop on each directory in loc as top
 #loop on each subdirectory as second
