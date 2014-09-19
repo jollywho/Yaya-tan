@@ -1,13 +1,26 @@
-loc="/mnt/casper/chishiki/dvds/Mw5H"
+loc="/mnt/casper/chishiki/dvds"
 
-#loop on each directory in loc as top
-#loop on each subdirectory as second
-#if second contains a directory, move that directory to top
-#rename second to [](filename)[] of first item in its dir as ndir
-#if top contains ndir, move contents of ndir into top/ndir
 find $loc -iname '*.*' | while read file; do
-  echo "$file"
-  basename "$file" | python fname_strip.py
+
+  filename=$(basename "$file")
+  dest=$(echo "$filename" | python fname_strip.py)
+  name=$(echo $dest | cut -d " " -f1)
+  ep=$(echo $dest | cut -d " " -f2)
+
+  if [[ -n $dest ]]; then
+
+    new_loc=$loc/$name
+    new_file=$new_loc/$filename
+
+    mkdir -p $new_loc
+
+    #if file doesnt exist (to prevent overwrite)
+    if [ ! -f $new_file ]; then
+      mv -i "$file" "$new_loc"
+    fi
+
+  fi
 done
 
-#find $loc -type d -empty -delete
+#delete empty directories
+find $loc -type d -empty -delete
