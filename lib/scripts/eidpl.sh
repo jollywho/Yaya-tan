@@ -12,8 +12,10 @@ b=$(find /media/1 -type d -printf x | wc -c)
 casper_path=/mnt/casper/chishiki/dvds
 if [[ $a -gt 0 || $b -gt 1 ]]; then
   printf "starting..."
-  temp=$(mktemp -d $casper_path/XXXXX) && chmod 755 $temp
+  temp=$(mktemp -d $casper_path/XXXXX) && chmod -R +rw $temp
   sudo cp -rf /media/1/* $temp
+  sudo chmod -R +rw $temp
+  sudo chown -R chishiki $temp
   printf "done.\n"
   tput setaf 2
   banner -C --font=2 '##DONE##'
