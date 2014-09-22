@@ -2,6 +2,8 @@ import sys
 import re
 
 name = sys.stdin.read()
+subgroup = re.search("\[(.*?)\]", name).group()
+checksum = re.search("\[([0-f]{8})\]", name).group()
 rep = re.sub("\[.*?\]", "", name)
 rep = re.sub("\(.*?\)", "", rep)
 
@@ -17,11 +19,16 @@ match_type = \
 
 def pull(m):
     title = re.sub("[._ -]", "_", m.groups()[0])
+
+    tmv = re.split("(^_?The)", title)
+    if len(tmv) > 2:
+        title = tmv[2] + "," + tmv[1]
+
     title = re.sub("^_", "", title)
     title = re.sub("__", "", title)
     title = re.sub("_$", "", title)
     ep = re.sub("[_ ]", "", m.groups()[1])
-    print(title.title(), " ", ep)
+    print(title.title(), " ", ep, " ", subgroup, " ", checksum)
 
 def do_match(x):
     m = re.match(match_type[x], rep)

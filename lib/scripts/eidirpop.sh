@@ -1,4 +1,4 @@
-loc="/mnt/casper/chishiki/dvds"
+loc="/mnt/casper/chishiki/ALL"
 
 find $loc -iname '*.*' | while read file; do
 
@@ -15,7 +15,7 @@ find $loc -iname '*.*' | while read file; do
     mkdir -p $new_loc
 
     #if file doesnt exist (to prevent overwrite)
-    if [ ! -f $new_file ]; then
+    if [ ! -f "$new_file" ]; then
       mv -i "$file" "$new_loc"
     fi
 
