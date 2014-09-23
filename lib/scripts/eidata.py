@@ -4,7 +4,7 @@ import re
 
 name = sys.stdin.read()
 subgroup = re.search("\[(.*?)\]", name).group(1)
-checksum = re.search("\[([0-f]{8})\]", name).group(1)
+checksum = re.search("[\[|\(]([0-f]{8})[\]|\)]", name).group(1)
 rep = re.sub("\[.*?\]", "", name)
 rep = re.sub("\(.*?\)", "", rep)
 
