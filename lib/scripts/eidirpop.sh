@@ -3,7 +3,7 @@ loc="/mnt/casper/chishiki/ALL"
 find $loc -iname '*.*' | while read file; do
 
   filename=$(basename "$file")
-  dest=$(echo "$filename" | python fname_strip.py)
+  dest=$(echo "$filename" | eidata )
   name=$(echo $dest | cut -d " " -f1)
   ep=$(echo $dest | cut -d " " -f2)
 
