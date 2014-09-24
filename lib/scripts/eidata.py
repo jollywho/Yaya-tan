@@ -3,8 +3,12 @@ import sys
 import re
 
 name = sys.stdin.read()
-subgroup = re.search("\[(.*?)\]", name).group(1)
-checksum = re.search("[\[|\(]([0-f]{8})[\]|\)]", name).group(1)
+subgroup = re.search("\[(.*?)\]", name)
+subgroup = subgroup.group(1) if subgroup != None else ""
+
+checksum = re.search("[\[|\(]([0-f]{8})[\]|\)]", name)
+checksum = checksum.group(1) if checksum != None else ""
+
 rep = re.sub("\[.*?\]", "", name)
 rep = re.sub("\(.*?\)", "", rep)
 
@@ -16,6 +20,7 @@ match_type = \
         "(.+).*[._ -]([0-9]{1,2}[Xx][0-9]{1,2})",
         "(.+[^Ep]).*([0-9]{2,3})",
         "(.+[^Ep]).*(ED|OP[0-9]{1,2})",
+        "(.+[^Ep]).*_-_.*()",
         ]
 
 def pull(m):
