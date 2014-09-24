@@ -1,6 +1,5 @@
 loc="/mnt/casper/chishiki/ALL"
 
-echo $@
 find "$1" -iname '*.*' | while read file; do
 
   # if eidata supplied
@@ -13,7 +12,6 @@ find "$1" -iname '*.*' | while read file; do
     name=$(echo $dest | cut -d " " -f1)
   fi
 
-  exit
   # if a valid name is returned
   if [ -n $name ]; then
 

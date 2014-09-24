@@ -29,7 +29,8 @@ def xfer_end_do(data, signal, signal_data):
     status = wc.infolist_string(signal_data, 'status_string')
     filename = wc.infolist_string(signal_data, 'filename')
     local = wc.infolist_string(signal_data, 'local_filename')
-    if status == "Done":
+    print(status)
+    if status == "done":
         os.popen('eiyfs "%s"' % local, 'r', 0)
     return wc.WEECHAT_RC_OK
 
