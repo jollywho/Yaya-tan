@@ -1,6 +1,6 @@
 loc="/mnt/casper/chishiki/ALL"
 
-find $loc -iname '*.*' | while read file; do
+find "$1" -iname '*.*' | while read file; do
 
   filename=$(basename "$file")
   dest=$(echo "$filename" | eidata )
