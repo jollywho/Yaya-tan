@@ -1,13 +1,21 @@
 loc="/mnt/casper/chishiki/ALL"
 
+echo $@
 find "$1" -iname '*.*' | while read file; do
 
-  filename=$(basename "$file")
-  dest=$(echo "$filename" | eidata )
-  name=$(echo $dest | cut -d " " -f1)
-  ep=$(echo $dest | cut -d " " -f2)
+  # if eidata supplied
+  if [ $# -gt 1 ]; then
+    filename="$1"
+    name="$2"
+  else
+    filename=$(basename "$file")
+    dest=$(echo "$filename" | eidata )
+    name=$(echo $dest | cut -d " " -f1)
+  fi
 
-  if [[ -n $dest ]]; then
+  exit
+  # if a valid name is returned
+  if [ -n $name ]; then
 
     new_loc=$loc/$name
     new_file=$new_loc/$filename
