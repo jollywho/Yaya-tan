@@ -1,4 +1,4 @@
-EIIDIR='/mnt/eii/lib'
+EIIDIR='/usr/share/eii/lib'
 EIICMD="${EIIDIR}/eii.sh"
 
 gen_data()

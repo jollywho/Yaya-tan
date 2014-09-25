@@ -1,4 +1,4 @@
-loc="/mnt/casper/YFS/ALL"
+loc="${HOME}/YFS/ALL"
 
 find "$1" -iname '*.*' | while read file; do
 
@@ -16,7 +16,7 @@ find "$1" -iname '*.*' | while read file; do
   if [ -n $name ]; then
 
     new_loc=$loc/$name
-    new_file=$new_loc/$filename
+    new_file=${new_loc}/$(basename ${filename})
 
     mkdir -p $new_loc
 
