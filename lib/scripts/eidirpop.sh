@@ -1,4 +1,4 @@
-loc="/mnt/casper/chishiki/ALL"
+loc="/mnt/casper/YFS/ALL"
 
 find "$1" -iname '*.*' | while read file; do
 

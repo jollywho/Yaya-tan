@@ -1,4 +1,4 @@
-EIIDIR='/home/chishiki/qp/eii/lib'
+EIIDIR='/mnt/eii/lib'
 EIICMD="${EIIDIR}/eii.sh"
 
 gen_data()
@@ -34,7 +34,7 @@ load_to_db()
   #if valid master_id then add file data to EII
   if [ -n ${m_id} ]; then
     args="-i -r -t file -v"
-    $(. ${EIICMD} ${args} ${m_id} "${bname}" ${ep} ${sub} ${check} 2> /dev/null)
+    $(. ${EIICMD} ${args} ${m_id} "${name}" ${ep} ${sub} ${check} 2> /dev/null)
   fi
 }
 
