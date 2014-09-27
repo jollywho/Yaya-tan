@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import socket,os,glob
+import shlex
 
 class Yaya_serv():
     def __init__(self):
@@ -18,5 +19,5 @@ class Yaya_serv():
             data = self.c.recv(2048)
             if len(data) > 0:
                 buf = data.decode("UTF-8")
-                spl = buf.split()
+                spl = shlex.split(buf)
                 os.popen(self.msg % (spl[0], spl[1], spl[2]))
