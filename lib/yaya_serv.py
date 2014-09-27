@@ -3,12 +3,8 @@ import socket,os
 
 class Yaya_serv():
     def __init__(self):
-        self.s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        try:
-            os.remove("/tmp/aaa")
-        except OSError:
-            pass
-        self.s.bind("/tmp/aaa")
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.bind('casper', 8889)
         self.s.listen(1)
 
     def run(self):
@@ -16,5 +12,6 @@ class Yaya_serv():
         while 1:
             self.c, adrr = self.s.accept()
             data = self.c.recv(2048)
-            print(data)
-            #self.c.send(data)
+            if len(data) > 0:
+                buf = buf.decode("UTF-8")
+                print(buf)

@@ -8,9 +8,9 @@ message = " "
 
 def send_message(server, channel, message):
     msg = " ".join([server, channel, message])
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.connect("/tmp/aaa")
-    s.send(bytes(msg, "utf-8"))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect("casper", 8889)
+    s.send(bytes(msg, "UTF-8"))
 
 def main(argv):
     msg = argv

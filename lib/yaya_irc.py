@@ -6,7 +6,7 @@ import threading
 from yaya_dcc import Yaya_dcc
 server = "irc.rizon.net"
 channel = "#yayatest"
-channel2 = "#NIBL"
+#channel2 = "#NIBL"
 botnick = "Yaya-tan"
 #nnn = "Arcoxia"
 #nnn = "Arutha"
@@ -23,7 +23,7 @@ class Yaya_irc():
         msg = "NICK " + botnick + "\n"
         self.s.send(bytes(msg, "UTF-8"))
         self.joinchan(channel)
-        self.joinchan(channel2)
+        #self.joinchan(channel2)
 
     def ping(self):
       self.s.send(bytes("PONG :Pong\n", "UTF-8"))
