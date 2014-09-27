@@ -7,6 +7,9 @@ class Yaya_serv():
         self.s.bind(('casper', 8889))
         self.s.listen(1)
         self.hostpath = os.environ['HOME']
+        self.fifo = glob.glob("%s/.weechat/weechat_fifo*")
+        self.fifopath = self.fifo % self.fifo[0]
+        self.msg = "echo 'irc.%s.#%s' > " + self.fifopath
 
     def run(self):
 
@@ -15,9 +18,6 @@ class Yaya_serv():
             data = self.c.recv(2048)
             if len(data) > 0:
                 buf = data.decode("UTF-8")
-                msg = "echo 'irc.rizon.#yayatest"
-                msg += " *%s'" % data.decode("UTF-8").strip()
-                fl = glob.glob("%s/.weechat/weechat_fifo*" % self.hostpath)
-                msg += " > %s" % fl[0]
-                os.popen(msg)
+                spl = buf.split()
+                os.popen(self.msg % (spl[0], spl[1], spl[2]))
 
