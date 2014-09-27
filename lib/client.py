@@ -36,7 +36,7 @@ def main(argv):
             msg.remove("-c")
             msg.remove(arg)
         elif opt in ("-m", "--message"):
-            message = arg
+            message = "'%s'" % arg
             msg.remove("-m")
             msg.remove(arg)
     return msg
