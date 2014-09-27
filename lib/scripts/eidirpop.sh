@@ -1,6 +1,15 @@
-loc="${HOME}/YFS/ALL"
+if [ $HOSTNAME == casper ]; then
+  YFSDIR=${HOME}
+elif [ "$HOSTNAME" = melchior ]; then
+  YFSDIR='/mnt/casper'
+fi
+YFSDIR="${YFSDIR}/YFS/ALL"
 
-find "$1" -iname '*.*' | while read file; do
+find "${1}" -iname '*.*' | while read file; do
+
+#if good extension
+shopt -s nocasematch
+if [[ "${1}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
 
   # if eidata supplied
   if [ $# -gt 1 ]; then
@@ -15,18 +24,19 @@ find "$1" -iname '*.*' | while read file; do
   # if a valid name is returned
   if [ -n $name ]; then
 
-    new_loc=$loc/$name
-    new_file=${new_loc}/$(basename ${filename})
+    new_YFSDIR=$YFSDIR/$name
+    new_file=${new_YFSDIR}/$(basename ${filename})
 
-    mkdir -p $new_loc
+    mkdir -p $new_YFSDIR
 
     #if file doesnt exist (to prevent overwrite)
     if [ ! -f "$new_file" ]; then
-      mv -i "$file" "$new_loc"
+      mv -i "$file" "$new_YFSDIR"
     fi
 
   fi
+fi
 done
 
 #delete empty directories
-find $loc -type d -empty -delete
+#find "${1}" -type d -empty -delete

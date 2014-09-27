@@ -1,11 +1,20 @@
-EIIDIR='/usr/share/eii/lib'
+if [ $HOSTNAME == casper ]; then
+  EIIDIR='/usr/share/eii/lib'
+elif [ "$HOSTNAME" = melchior ]; then
+  EIIDIR='/mnt/eii/lib'
+fi
 EIICMD="${EIIDIR}/eii.sh"
 
+exit
 gen_data()
 {
-  bname="$(basename "$1")"
-  data=($(echo "${bname}" | eidata ))
-  set_data ${data[@]}
+  #if good extension
+  shopt -s nocasematch
+  if [[ "${1}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
+    bname="$(basename "$1")"
+    data=($(echo "${bname}" | eidata ))
+    set_data ${data[@]}
+  fi
 }
 
 set_data()
