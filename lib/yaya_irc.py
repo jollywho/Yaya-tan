@@ -16,14 +16,15 @@ botnick = "Yaya-tan"
 
 class Yaya_irc():
     def __init__(self):
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((server, 6667))
-        msg = "USER " + botnick + " " + botnick + " " + botnick + " :#\n"
-        self.s.send(bytes(msg, "UTF-8"))
-        msg = "NICK " + botnick + "\n"
-        self.s.send(bytes(msg, "UTF-8"))
-        self.joinchan(channel)
+        #self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.s.connect((server, 6667))
+        #msg = "USER " + botnick + " " + botnick + " " + botnick + " :#\n"
+        #self.s.send(bytes(msg, "UTF-8"))
+        #msg = "NICK " + botnick + "\n"
+        #self.s.send(bytes(msg, "UTF-8"))
+        #self.joinchan(channel)
         #self.joinchan(channel2)
+        1
 
     def ping(self):
       self.s.send(bytes("PONG :Pong\n", "UTF-8"))
