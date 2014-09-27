@@ -1,11 +1,10 @@
-if [ $HOSTNAME == casper ]; then
+if [ "$HOSTNAME" == casper ]; then
   EIIDIR='/usr/share/eii/lib'
 elif [ "$HOSTNAME" = melchior ]; then
   EIIDIR='/mnt/eii/lib'
 fi
 EIICMD="${EIIDIR}/eii.sh"
 
-exit
 gen_data()
 {
   #if good extension
@@ -50,7 +49,7 @@ load_to_db()
 if [ $# -gt 1 ]; then
   load_to_db $(set_data $@)
 else
-  find "$1" -iname '*.*' | while read file; do
+  find "${1}" -iname '*.*' | while read file; do
     echo "${file}"
     load_to_db $(gen_data "${file}")
   done

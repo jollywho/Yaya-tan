@@ -1,4 +1,4 @@
-if [ $HOSTNAME == casper ]; then
+if [ "$HOSTNAME" == casper ]; then
   YFSDIR=${HOME}
 elif [ "$HOSTNAME" = melchior ]; then
   YFSDIR='/mnt/casper'
@@ -9,7 +9,7 @@ find "${1}" -iname '*.*' | while read file; do
 
 #if good extension
 shopt -s nocasematch
-if [[ "${1}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
+if [[ "${file}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
 
   # if eidata supplied
   if [ $# -gt 1 ]; then
