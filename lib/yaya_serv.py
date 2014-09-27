@@ -8,8 +8,8 @@ class Yaya_serv():
         self.s.listen(1)
         self.hostpath = os.environ['HOME']
         self.fifopath = "%s/.weechat/weechat_fifo*"
-        self.fifo = glob.glob(self.fifo % self.fifo[0])
-        self.msg = "echo 'irc.%s.#%s' > " + self.fifo
+        self.fifo = glob.glob(self.fifopath % self.hostpath)
+        self.msg = "echo 'irc.%s.#%s *%s' > " + self.fifo[0]
 
     def run(self):
 
@@ -20,4 +20,3 @@ class Yaya_serv():
                 buf = data.decode("UTF-8")
                 spl = buf.split()
                 os.popen(self.msg % (spl[0], spl[1], spl[2]))
-
