@@ -7,9 +7,9 @@ class Yaya_serv():
         self.s.bind(('casper', 8889))
         self.s.listen(1)
         self.hostpath = os.environ['HOME']
-        self.fifo = glob.glob("%s/.weechat/weechat_fifo*")
-        self.fifopath = self.fifo % self.fifo[0]
-        self.msg = "echo 'irc.%s.#%s' > " + self.fifopath
+        self.fifopath = "%s/.weechat/weechat_fifo*"
+        self.fifo = glob.glob(self.fifo % self.fifo[0])
+        self.msg = "echo 'irc.%s.#%s' > " + self.fifo
 
     def run(self):
 
