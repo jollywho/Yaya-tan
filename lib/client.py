@@ -1,6 +1,7 @@
 import socket
 import os,sys
 import getopt
+import shlex
 
 server = " "
 channel = " "
@@ -42,6 +43,10 @@ def main(argv):
     return msg
 
 if __name__ == "__main__":
-    msg = main(sys.argv[1:])
+    if len(sys.argv) > 1:
+        msg = main(sys.argv[1:])
+    else:
+        args = shlex.split(sys.stdin.readline())
+        msg = main(args)
     message = ''.join(msg) if message is " " else message
     send_message(server, channel, message)
