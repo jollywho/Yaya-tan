@@ -57,12 +57,11 @@ clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g' | sed 's/||/@/g')
 PACKS=()
 for str in "$clip"
 do
-  echo "$str"
   PACKS+=$(echo -e "$str" | cut -d '@' -f2)
 done
 botname=$(echo "$str" | head -1 | cut -d '@' -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
-clip="-s rizon -c nibl -m '/msg ${botname} xdcc batch ${pack}'"
+clip="-s rizon -c NIBL -m '/msg ${botname} xdcc batch ${pack}'"
 
-echo -e "$clip"
+echo -e "$clip" > /tmp/einibl.tmp
