@@ -63,7 +63,6 @@ done
 botname=$(echo "$str" | head -1 | cut -d '@' -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
-clip="/msg ${botname} xdcc batch ${pack}"
+clip="-s rizon -c nibl -m '/msg ${botname} xdcc batch ${pack}'"
 
 echo -e "$clip"
-echo $clip | xclip
