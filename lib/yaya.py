@@ -37,7 +37,7 @@ def daemonize():
 
 if __name__ == "__main__":
 
-    #daemonize()
+    daemonize()
     yaya = Yaya_irc()
     server = Yaya_serv()
     server.run()
