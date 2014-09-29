@@ -50,7 +50,6 @@ if [ $# -gt 1 ]; then
   load_to_db $(set_data $@)
 else
   find "${1}" -iname '*.*' | while read file; do
-    echo "${file}"
     load_to_db $(gen_data "${file}")
   done
 fi
