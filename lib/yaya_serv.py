@@ -12,6 +12,15 @@ class Yaya_serv():
         self.fifo = glob.glob(self.fifopath % self.hostpath)
         self.msg = "echo 'irc.%s.#%s *%s' > " + self.fifo[0]
 
+    def retry_send(self):
+        print(self.fspl)
+        self.fspl[2] = self.fspl[2].replace("batch", "send")
+        self.send(self.fspl)
+
+    def send(self, spl):
+        self.fspl = spl
+        os.popen(self.msg % (spl[0], spl[1], spl[2]))
+
     def run(self):
 
         while 1:
@@ -20,4 +29,7 @@ class Yaya_serv():
             if len(data) > 0:
                 buf = data.decode("UTF-8")
                 spl = shlex.split(buf)
-                os.popen(self.msg % (spl[0], spl[1], spl[2]))
+                if spl[0] == '!':
+                    self.retry_send()
+                else:
+                    self.send(spl)
