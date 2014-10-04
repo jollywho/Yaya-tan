@@ -37,7 +37,7 @@ load_to_db()
 
   #get master_id for name from EII
   args="-s -x -t master -c id -f name -v ${name}"
-  m_id=$(. ${EIICMD} ${args} | cut -d$'\n' -f 2 2> /dev/null)
+  m_id=$(. ${EIICMD} ${args})
 
   #if valid master_id then add file data to EII
   if [ -n ${m_id} ]; then
