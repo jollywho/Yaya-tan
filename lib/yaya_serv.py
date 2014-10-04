@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 import socket,os,glob
 import shlex
 
@@ -13,9 +13,9 @@ class Yaya_serv():
         self.msg = "echo 'irc.%s.#%s *%s' > " + self.fifo[0]
 
     def retry_send(self):
-        print(self.fspl)
-        self.fspl[2] = self.fspl[2].replace("batch", "send")
-        self.send(self.fspl)
+        if self.fspl[2].find("batch") != -1:
+            self.fspl[2] = self.fspl[2].replace("batch", "send")
+            self.send(self.fspl)
 
     def send(self, spl):
         self.fspl = spl
