@@ -10,10 +10,6 @@ url = "http://api.anidb.net:9001/httpapi\?request\=anime\&client\=yaya\&clientve
 req = url + aid
 o = Nokogiri::XML(open(req))
 
-
-f = File.open('aniout', 'w')
-f.write(o)
-
-
-ep = o.xpath("//episodecount")[0].content
-puts(ep)
+ep = o.xpath("//episodecount")[0].content.strip
+date = o.xpath("//startdate")[0].content.strip
+puts("#{ep}|#{date}")
