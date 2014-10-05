@@ -21,19 +21,21 @@ fi
 
 EIICMD="./eii.sh"
 dbdir=/home/chishiki/qp/einibl/anidb/bin/anidb.db
+
 cd ${EIIDIR}
+
 sql="-t titles -c type,aid,title -f title -v ${name}"
 res=$(${EIICMD} -s -db $dbdir $sql)
+
 #if only a single record of type 1 exists
 if [ $(echo "${res}" | grep "^1" | wc -l) -eq 1 ] || \
    [ $(echo "${res}" | wc -l) -eq 1 ]; then
     aid=$(echo $res | cut -d '|' -f2)
-    echo $aid
     adata=$(ruby ${AWD}anidb.rb $aid)
     ep=$(echo $adata | cut -d '|' -f1)
     date=$(echo $adata | cut -d '|' -f2)
-    ${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n "66"
-    ${EIICMD} -u -a -x -t master -c date -f name -v ${name} -n "2095"
+    ${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n ${ep}
+    ${EIICMD} -u -a -x -t master -c date -f name -v ${name} -n ${date}
 else
   echo nothing found
 fi
