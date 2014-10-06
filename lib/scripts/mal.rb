@@ -6,12 +6,21 @@ if ARGV.size < 3
 end
 id = ARGV[0]
 pw = ARGV[1]
-aid = ARGV[2]
+title = ARGV[2]
 url = "http://myanimelist.net/api/anime/search.xml\?q\="
-req = url + aid
+req = url + title
 o = Nokogiri::XML(open(req, http_basic_authentication: ["#{id}", "#{pw}"]))
 
-ep = o.xpath("//episodes")
-#date = o.xpath("//startdate")[0].content.strip
-puts ep
-#puts("#{ep}|#{date}")
+title = title.upcase()
+o.xpath("//title").each do |i|
+  c = i.content.upcase().tr(" ", "_")
+  if c == title
+    t = o.xpath("//title[text()='#{i.content}']/..")
+    t.each do |m|
+      ep = t.css('episodes').text.strip
+      sd = t.css('start_date').text.strip
+      puts("#{ep}|#{sd}")
+    end
+  end
+end
+
