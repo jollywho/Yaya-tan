@@ -31,7 +31,8 @@ res=$(${EIICMD} -s -db $dbdir $sql)
 if [ $(echo "${res}" | grep "^1" | wc -l) -eq 1 ] || \
    [ $(echo "${res}" | wc -l) -eq 1 ]; then
     aid=$(echo $res | cut -d '|' -f2)
-    adata=$(ruby ${AWD}anidb.rb $aid)
+    secret=$(cat ${AWD}../../secret)
+    adata=$(ruby ${AWD}mal.rb ${secret[0]} ${secret[1]} "${name}")
     ep=$(echo $adata | cut -d '|' -f1)
     date=$(echo $adata | cut -d '|' -f2)
     ${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n ${ep}
