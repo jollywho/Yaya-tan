@@ -24,9 +24,13 @@ cd ${EIIDIR}
 aid=$(echo $res | cut -d '|' -f2)
 secret=$(cat ${AWD}../../secret)
 adata=$(ruby ${AWD}mal.rb ${secret[0]} ${secret[1]} "${name}")
-ep=$(echo $adata | cut -d '|' -f1)
-date=$(echo $adata | cut -d '|' -f2)
-${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n ${ep}
-${EIICMD} -u -a -x -t master -c date -f name -v ${name} -n ${date}
+
+# if mal returned a match
+if [ -n $adata ]; then
+  ep=$(echo $adata | cut -d '|' -f1)
+  date=$(echo $adata | cut -d '|' -f2)
+  ${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n ${ep}
+  ${EIICMD} -u -a -x -t master -c date -f name -v ${name} -n ${date}
+fi
 
 eidirpop "${1}" ${data}
