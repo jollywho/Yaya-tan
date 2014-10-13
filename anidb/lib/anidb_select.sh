@@ -1,5 +1,5 @@
-db=anidb.db
-sql="SELECT aid FROM titles
+db=../bin/anidb.db
+sql="SELECT aid,title FROM titles
 WHERE
 type = 1
 and
