@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-AWD=$HOME/Yaya-tan/lib/scripts/
+AWD=$HOME/qp/Yaya-tan/lib/scripts/
 #if file
 if [ -f "${1}" ]; then
   data=$(basename "${1}" | eidata)
@@ -21,7 +21,6 @@ fi
 EIICMD="./eii.sh"
 cd ${EIIDIR}
 
-aid=$(echo $res | cut -d '|' -f2)
 secret=$(cat ${AWD}../../secret)
 adata=$(ruby ${AWD}mal.rb ${secret[0]} ${secret[1]} "${name}")
 
