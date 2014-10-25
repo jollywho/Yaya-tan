@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os,sys,threading
 from yaya_irc import Yaya_irc
 from yaya_serv import Yaya_serv
