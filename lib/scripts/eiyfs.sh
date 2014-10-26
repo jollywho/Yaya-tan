@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-AWD=$HOME/qp/Yaya-tan/lib/scripts/
+AWD=$HOME/Yaya-tan/lib/scripts/
 #if file
 if [ -f "${1}" ]; then
   data=$(basename "${1}" | eidata)
@@ -25,7 +25,7 @@ secret=$(cat ${AWD}../../secret)
 adata=$(ruby ${AWD}mal.rb ${secret[0]} ${secret[1]} "${name}")
 
 # if mal returned a match
-if [ -n $adata ]; then
+if [[ $adata ]]; then
   ep=$(echo $adata | cut -d '|' -f1)
   date=$(echo $adata | cut -d '|' -f2)
   ${EIICMD} -u -a -x -t master -c episodecount -f name -v ${name} -n ${ep}

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os,sys,threading
+import ctypes
 from yaya_irc import Yaya_irc
 from yaya_serv import Yaya_serv
 
@@ -38,6 +39,8 @@ def daemonize():
 
 if __name__ == "__main__":
 
+    libc = ctypes.cdll.LoadLibrary('libc.so.6')
+    libc.prctl(15, "Yaya", 0, 0, 0)
     daemonize()
     yaya = Yaya_irc()
     server = Yaya_serv()
