@@ -3,7 +3,6 @@
 import socket
 import re
 import threading
-from yaya_dcc import Yaya_dcc
 server = "irc.rizon.net"
 channel = "#yayatest"
 #channel2 = "#NIBL"

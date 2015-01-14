@@ -46,8 +46,8 @@ load_to_db()
   fi
 }
 
-if [ $# -gt 1 ]; then
-  load_to_db $(set_data $@)
+if [ -f "${1}" ]; then
+  load_to_db $(set_data "${@:2}")
 else
   find "${1}" -iname '*.*' | while read file; do
     load_to_db $(gen_data "${file}")

@@ -13,7 +13,7 @@ if [[ "${file}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
 
   # if eidata supplied
   if [ $# -gt 1 ]; then
-    filename="$1"
+    filename=$(basename "$file")
     name="$2"
   else
     filename=$(basename "$file")
@@ -25,7 +25,7 @@ if [[ "${file}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
   if [ -n $name ]; then
 
     new_YFSDIR=$YFSDIR/$name
-    new_file=${new_YFSDIR}/$(basename ${filename})
+    new_file=${new_YFSDIR}/$(basename "${filename}")
 
     mkdir -p $new_YFSDIR
 
