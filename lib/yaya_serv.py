@@ -10,7 +10,7 @@ class Yaya_serv():
         self.hostpath = os.environ['HOME']
         self.fifopath = "%s/.weechat/weechat_fifo*"
         self.fifo = glob.glob(self.fifopath % self.hostpath)
-        self.msg = "echo 'irc.%s.#%s *%s' > " + self.fifo[0]
+        self.msg = "echo '%s%s *%s' > " + self.fifo[0]
 
     def retry_send(self):
         if self.fspl[2].find("batch") != -1:
@@ -19,6 +19,7 @@ class Yaya_serv():
 
     def send(self, spl):
         self.fspl = spl
+        spl[1] = spl[1].replace(";", "")
         os.popen(self.msg % (spl[0], spl[1], spl[2]))
 
     def run(self):
