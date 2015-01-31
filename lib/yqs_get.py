@@ -9,8 +9,6 @@ import socket,os
 
 #todo: YQS getopts
 
-#todo: 
-
 #YQS [search str]
 #YQS [l|s|q] | [p|r|c]
 #    <option>  <command>
@@ -35,8 +33,11 @@ class col:
     AOFF = BLACK
 
 def fmt(msg):
-    spl = msg.split(" ")
+    if len(msg) < 1:
+      print("Yaya has no history.")
+      exit(0)
 
+    spl = msg.split(" ")
     name = spl[0]
     status = spl[1]
     rate = spl[2]

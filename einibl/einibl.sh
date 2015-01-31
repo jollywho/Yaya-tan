@@ -62,6 +62,6 @@ done
 botname=$(echo "$str" | head -1 | cut -d '@' -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
-clip="-s irc.rizon -c .#nibl -m '/msg ${botname} xdcc batch ${pack}'"
+clip="-s irc.rizon -c .#NIBL -m '/msg ${botname} xdcc batch ${pack}'"
 
 echo -e "$clip" > /tmp/einibl.tmp
