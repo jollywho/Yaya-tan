@@ -3,7 +3,8 @@
 #[l]ist xfers
 if [ $1 = "-l" ]; then
   (yqs_get) &
-  msg="-s core.weechat -c ; -m '/yqs_xfer -l'"
+  host=$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f8)
+  msg="-s core.weechat -c ; -m '/yqs_xfer -l ${host}:3333'"
   echo -e "$msg" | req_dcc
   wait
 #[c]lose file xfer

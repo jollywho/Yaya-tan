@@ -45,6 +45,8 @@ def fmt(msg):
     pos = "%.2f" % (float(spl[4])/1024.0**2)
     size = "%.2f" % (float(spl[5])/1024.0**2)
 
+    if size == 0:
+        size = 1 #avoid div0 on broken files
     percent = "%2d" % (float(pos)/float(size)*100)
     if status == "done" or status == "aborted":
         stat_col = col.SOFF

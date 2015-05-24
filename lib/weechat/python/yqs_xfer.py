@@ -2,8 +2,6 @@ import weechat as wc
 import socket
 import os
 
-M_HOST = "melchior"
-M_PORT = 3333
 C_HOST = "casper"
 C_PORT = 8889
 
@@ -20,7 +18,7 @@ def send_message(host,port,msg):
     s.connect((host, port))
     s.sendall(msg)
 
-def request():
+def request(ip,port):
     infolist = wc.infolist_get("xfer", "", "")
     name = ""
     if infolist:
@@ -39,11 +37,13 @@ def request():
          name += "|"
       name = name[:-1]
       wc.infolist_free(infolist)
-      send_message(M_HOST, M_PORT, name)
+      send_message(ip, port, name)
 
 def run(data, buffer, args):
-    if args == "-l":
-        request()
+    if args[0:2] == "-l":
+        ip,port = args[2:].split(":")
+        port = int(port)
+        request(ip,port)
     return wc.WEECHAT_RC_OK
 
 def xfer_end_do(data, signal, signal_data):
