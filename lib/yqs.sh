@@ -15,6 +15,10 @@ elif [ $1 = '-c' ]; then
 elif [ $1 = '-p' ]; then
   msg="-s xfer.xfer.list -c ; -m 'p'"
   echo -e "$msg" | req_dcc
+#kill
+elif [ $1 = '--kill' ]; then
+  msg="-s yaya -c ; -m 'kill'"
+  echo -e "$msg" | req_dcc
 #do search
 else
   einibl $@

@@ -41,9 +41,9 @@ if __name__ == "__main__":
 
     libc = ctypes.cdll.LoadLibrary('libc.so.6')
     libc.prctl(15, "Yaya", 0, 0, 0)
-    daemonize()
     yaya = Yaya_irc()
     server = Yaya_serv()
+    daemonize()
     server.run()
     v = threading.Thread(target=server.run)
     v.daemon = True

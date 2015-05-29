@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import socket,os,glob
+import socket,os,glob,sys
 import shlex
 
 class Yaya_serv():
@@ -10,7 +10,11 @@ class Yaya_serv():
         self.hostpath = os.environ['HOME']
         self.fifopath = "%s/.weechat/weechat_fifo*"
         self.fifo = glob.glob(self.fifopath % self.hostpath)
-        self.msg = "echo '%s%s *%s' > " + self.fifo[0]
+        if len(self.fifo) < 1:
+            print("Error: weechat fifo not found. Cannot start.")
+            sys.exit(1)
+        else:
+            self.msg = "echo '%s%s *%s' > " + self.fifo[0]
 
     def retry_send(self):
         if self.fspl[2].find("batch") != -1:
@@ -32,5 +36,7 @@ class Yaya_serv():
                 spl = shlex.split(buf)
                 if spl[0] == '!':
                     self.retry_send()
+                elif spl[2] == "kill":
+                    sys.exit(1)
                 else:
                     self.send(spl)
