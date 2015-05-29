@@ -1,7 +1,7 @@
 if [ "$HOSTNAME" == casper ]; then
   YFSDIR=${HOME}
 elif [ "$HOSTNAME" = melchior ]; then
-  YFSDIR='/mnt/casper'
+  YFSDIR='/mnt/casper/chishiki'
 fi
 YFSDIR="${YFSDIR}/YFS/ALL"
 
@@ -24,10 +24,10 @@ if [[ "${file}" =~ ^.*\.(mkv|avi|mp4|ogm)$ ]]; then
   # if a valid name is returned
   if [ -n $name ]; then
 
-    new_YFSDIR=$YFSDIR/$name
+    new_YFSDIR="$YFSDIR"/"$name"
     new_file=${new_YFSDIR}/$(basename "${filename}")
 
-    mkdir -p $new_YFSDIR
+    mkdir -p "$new_YFSDIR"
 
     #if file doesnt exist (to prevent overwrite)
     if [ ! -f "$new_file" ]; then
