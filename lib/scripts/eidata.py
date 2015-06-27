@@ -2,7 +2,9 @@
 import sys
 import re
 
+opt = ''.join(sys.argv[1:])
 name = sys.stdin.read()
+
 subgroup = re.search("\[(.*?)\]", name)
 subgroup = subgroup.group(1) if subgroup != None else ""
 
@@ -24,6 +26,15 @@ match_type = \
         "(.+[^Ep][^_-]).*_-_.*()",
         ]
 
+def output(title,ep,subgroup,checksum):
+    if not (opt):
+        print(title, " ", ep, " ", subgroup, " ", checksum)
+    else:
+        if (opt == "-title"): print(title)
+        if (opt == "-ep"): print(ep)
+        if (opt == "-subgroup"): print(subgroup)
+        if (opt == "-checksum"): print(checksum)
+
 def pull(m):
     title = re.sub("[._ ]", "_", m.groups()[0])
 
@@ -35,7 +46,7 @@ def pull(m):
     title = re.sub("__", "", title)
     title = re.sub("_$", "", title)
     ep = re.sub("[_ ]", "", m.groups()[1])
-    print(title.title(), " ", ep, " ", subgroup, " ", checksum)
+    output(title.title(), ep, subgroup, checksum)
 
 def do_match(x):
     m = re.match(match_type[x], rep)
