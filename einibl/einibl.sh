@@ -37,7 +37,7 @@ echo -e "$url" | xmllint --html --xpath "$size" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > $c
 echo -e "$url" | xmllint --html --xpath "$name" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > $d
-o=$(paste -d "\t" $a $b $c $d)
+o=$(paste -d \t $a $b $c $d)
 rm $a $b $c $d
 o=$(echo -e "$o" | sed 's/\t/||/g')
 
@@ -57,9 +57,9 @@ clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g' | sed 's/||/\t/g')
 PACKS=()
 for str in "$clip"
 do
-  PACKS+=$(echo -e "$str" | cut -d '\t' -f2)
+  PACKS+=$(echo -e "$str" | cut -d \t -f2)
 done
-botname=$(echo "$str" | head -1 | cut -d '\t' -f1)
+botname=$(echo "$str" | head -1 | cut -d \t -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
 clip="-s irc.rizon -c .#NIBL -m '/msg ${botname} xdcc batch ${pack}'"
