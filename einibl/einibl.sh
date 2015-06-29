@@ -37,9 +37,9 @@ echo -e "$url" | xmllint --html --xpath "$size" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${red}"'/' | sed 's/$/'"${NC}"'/' > $c
 echo -e "$url" | xmllint --html --xpath "$name" --format - \
   | sed '/^\s*$/d' | sed 's/^/'"${green}"'/' | sed 's/$/'"${NC}"'/' > $d
-o=$(paste -d "@" $a $b $c $d)
+o=$(paste -d "\t" $a $b $c $d)
 rm $a $b $c $d
-o=$(echo -e "$o" | sed 's/@/||/g')
+o=$(echo -e "$o" | sed 's/\t/||/g')
 
 # show contents with line numbers
 echo -e "$o" | less -N
@@ -51,15 +51,15 @@ item=$(echo "$item" | sed -e 's/\([0-9]*\)-\([0-9]*\)/\1,\2p/g' \
   | sed -e 's/\([0-9^,p]*\)/\1p;/g' | sed -e 's/pp/p/g')
 
 msg=$(echo -e "$o" | sed -n "${item}")
-clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g' | sed 's/||/@/g')
+clip=$(echo "$msg" | perl -pe 's/\e\[?.*?[\@-~]//g' | sed 's/||/\t/g')
 
 # iterate batch selection and combine pack #s
 PACKS=()
 for str in "$clip"
 do
-  PACKS+=$(echo -e "$str" | cut -d '@' -f2)
+  PACKS+=$(echo -e "$str" | cut -d '\t' -f2)
 done
-botname=$(echo "$str" | head -1 | cut -d '@' -f1)
+botname=$(echo "$str" | head -1 | cut -d '\t' -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
 clip="-s irc.rizon -c .#NIBL -m '/msg ${botname} xdcc batch ${pack}'"
