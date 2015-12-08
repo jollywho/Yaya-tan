@@ -41,6 +41,7 @@ ret=$(paste -d '\t' $a $b $c $d)
 rm $a $b $c $d
 o=$(echo -e "$ret" | sed 's/\t/||/g')
 
+trap "exit 0" SIGINT
 # show contents with line numbers
 echo -e "$o" | less -N
 read item
@@ -63,5 +64,7 @@ botname=$(echo "$str" | head -1 | cut -d$'\t' -f1)
 pack=$(echo $PACKS | tr ' ' ',')
 
 clip="-s irc.rizon -c .#NIBL -m '/msg ${botname} xdcc batch ${pack}'"
+clip2="-s irc.rizon -c .#nibl -m '/msg ${botname} xdcc batch ${pack}'"
 
-echo -e "$clip" > /tmp/einibl.tmp
+echo -e "$clip"  | req_dcc
+echo -e "$clip2" | req_dcc

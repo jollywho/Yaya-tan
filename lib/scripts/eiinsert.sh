@@ -1,6 +1,6 @@
 if [ "$HOSTNAME" == casper ]; then
   EIIDIR='/usr/share/eii/lib'
-elif [ "$HOSTNAME" = melchior ]; then
+elif [ "$HOSTNAME" = balthasar ]; then
   EIIDIR='/mnt/eii/lib'
 fi
 EIICMD="${EIIDIR}/eii.sh"

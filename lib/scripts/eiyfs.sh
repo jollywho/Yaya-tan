@@ -15,7 +15,7 @@ eiinsert "${1}" ${data}
 
 if [ "$HOSTNAME" == casper ]; then
   EIIDIR='/usr/share/eii/lib'
-elif [ "$HOSTNAME" = melchior ]; then
+elif [ "$HOSTNAME" = balthasar ]; then
   EIIDIR='/mnt/eii/lib'
 fi
 

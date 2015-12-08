@@ -1,7 +1,7 @@
 if [ "$HOSTNAME" == casper ]; then
   YFSDIR=${HOME}
-elif [ "$HOSTNAME" = melchior ]; then
-  YFSDIR='/mnt/casper/chishiki'
+elif [ "$HOSTNAME" == balthasar ]; then
+  YFSDIR=${HOME}/casper
 fi
 YFSDIR="${YFSDIR}/YFS/ALL"
 

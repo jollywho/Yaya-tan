@@ -1,5 +1,11 @@
 #!/usr/bin/sh
 
+trap "exit 0" SIGINT
+
+if [ $# -eq 0 ]; then
+  exit
+fi
+
 #[l]ist xfers
 if [ $1 = "-l" ]; then
   (yqs_get) &
@@ -15,6 +21,9 @@ elif [ $1 = '-c' ]; then
 elif [ $1 = '-p' ]; then
   msg="-s xfer.xfer.list -c ; -m 'p'"
   echo -e "$msg" | req_dcc
+#file
+elif [ $1 = '--file' ]; then
+  einibl $(echo "${@:2}" | eidata -title)
 #kill
 elif [ $1 = '--kill' ]; then
   msg="-s yaya -c ; -m 'kill'"
@@ -22,11 +31,4 @@ elif [ $1 = '--kill' ]; then
 #do search
 else
   einibl $@
-fi
-
-pipe=/tmp/einibl.tmp
-
-if [ -f $pipe ]; then
-  cat $pipe | req_dcc
-  rm $pipe
 fi
