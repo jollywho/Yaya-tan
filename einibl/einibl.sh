@@ -46,6 +46,10 @@ trap "exit 0" SIGINT
 echo -e "$o" | less -N
 read item
 
+if [ $item = 'q' ]; then
+  exit
+fi
+
 # e.g. 0 2 5 -> 0p;2p;5p
 # e.g. 1-5 -> 1,5p
 item=$(echo "$item" | sed -e 's/\([0-9]*\)-\([0-9]*\)/\1,\2p/g' \
